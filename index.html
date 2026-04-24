@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فۆڕمی تۆمارکردن</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="page-shell">
+    <main class="form-shell">
+      <header class="title-card">
+        <div class="title-card__accent" aria-hidden="true"></div>
+
+        <div class="org-badge">
+          <span class="org-badge__dot" aria-hidden="true"></span>
+          دەزگای روانگە — زنجیرە کۆرسی گەنجی بەرهەمدار
+        </div>
+
+        <p class="eyebrow">Cannulation and Types of Injections</p>
+        <h1>کانولا دانان و جۆرەکانی دەرزی لێدەن و فریاگوزاری سەرەتایی</h1>
+
+        <p class="lead">
+          لە چوارچێوەی پڕۆژەی زنجیرە کۆرسی گەنجی بەرهەمدار، ئەم خولە بە شێوازێکی
+          پراکتیکی پێشکەوتوو و سەردەمیانە <strong>بە شێوەی ئۆنلاین</strong> پێشکەش دەکرێت.
+        </p>
+
+        <div class="course-meta">
+          <div class="course-meta__item">
+            <span class="course-meta__icon" aria-hidden="true">📅</span>
+            <div>
+              <span class="course-meta__label">بەروار</span>
+              <span class="course-meta__value">
+                چوارشەممە ٢٩/٤/٢٠٢٦
+                &nbsp;·&nbsp;
+                پێنجشەممە ٣٠/٤/٢٠٢٦
+              </span>
+            </div>
+          </div>
+          <div class="course-meta__item">
+            <span class="course-meta__icon" aria-hidden="true">⏱</span>
+            <div>
+              <span class="course-meta__label">ماوە</span>
+              <span class="course-meta__value">٢ ڕۆژ</span>
+            </div>
+          </div>
+          <div class="course-meta__item">
+            <span class="course-meta__icon" aria-hidden="true">💻</span>
+            <div>
+              <span class="course-meta__label">شێواز</span>
+              <span class="course-meta__value">هەڵەبجە - هۆڵی ڕوانگە</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="lead lead--small title-card__note">
+          تکایە زانیارییەکانت بە وردی پڕ بکەرەوە بۆ تۆمارکردن.
+        </p>
+      </header>
+
+      <ol class="stepper" aria-label="هەنگاوەکانی فۆڕم">
+        <li class="stepper__item is-active" data-step-chip="0">
+          <span class="stepper__number">١</span>
+          <span class="stepper__label">پێشەکی</span>
+        </li>
+        <li class="stepper__item" data-step-chip="1">
+          <span class="stepper__number">٢</span>
+          <span class="stepper__label">زانیارییەکان</span>
+        </li>
+        <li class="stepper__item" data-step-chip="2">
+          <span class="stepper__number">٣</span>
+          <span class="stepper__label">پشکنین و ناردن</span>
+        </li>
+      </ol>
+
+      <form id="multiStepForm" novalidate>
+        <div class="form-trap" aria-hidden="true">
+          <label for="companyWebsite">Leave this field empty</label>
+          <input id="companyWebsite" name="companyWebsite" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- ══ Step 0: Intro ══════════════════════ -->
+        <section class="step-panel step-panel--intro is-active" data-step="0" aria-labelledby="introTitle">
+          <article class="section-card intro-card">
+            <div class="section-card__head">
+              <p class="section-kicker">هەنگاوی یەکەم</p>
+              <h2 id="introTitle">پێشەکی خول</h2>
+            </div>
+
+            <div class="intro-copy">
+              <p>ئەم خولە بۆ فێرکردنی بنەماکانی دەرزی لێدان، کانولا دانان، و هەندێک ڕێنمایی گرنگی پزیشکییە.</p>
+              <p>تکایە پێش پڕکردنەوەی فۆڕم دڵنیابە کە زانیارییەکانت دروستن، چونکە دواتر بۆ پەیوەندی کردن بەکار دەهێنرێن.
+              </p>
+            </div>
+
+            <div class="program-grid" aria-label="بوارەکانی خول">
+              <div class="program-pill">دەرزی لێدان</div>
+              <div class="program-pill">کانولا دانان</div>
+              <div class="program-pill">ڕێنمایی پزیشکی</div>
+              <div class="program-pill">مەشق و پراکتیک</div>
+            </div>
+
+            <div class="notice-grid">
+              <div class="notice-box">
+                <h3>تێبینی گرنگ</h3>
+                <p>ئەم خولە زیاتر بۆ بەشە پزیشکییەکانە. دوای تۆمارکردن، زانیارییەکان پشکنین دەکرێن.</p>
+              </div>
+              <div class="notice-box notice-box--soft">
+                <h3>دوای ناردن</h3>
+                <p>دوای ناردنی فۆڕم، زانیارییەکانت ڕاستەوخۆ دەچنە Google Sheet ـی ڕێکخەرانی خول.</p>
+              </div>
+            </div>
+
+            <label class="checkbox-card" for="confirmRead">
+              <input id="confirmRead" name="confirmRead" type="checkbox">
+              <span>زانیارییەکانی خولم خوێندەوە و ئامادەم بۆ چوونە هەنگاوی داهاتوو.</span>
+            </label>
+
+            <div class="panel-actions panel-actions--end">
+              <button class="button button--primary" id="startButton" type="button" disabled>
+                چوونە هەنگاوی دووەم
+              </button>
+            </div>
+          </article>
+        </section>
+
+        <!-- ══ Step 1: Info ═══════════════════════ -->
+        <section class="step-panel step-panel--details" data-step="1" aria-labelledby="infoTitle">
+          <article class="question-card question-card--lead">
+            <div class="section-card__head">
+              <p class="section-kicker">هەنگاوی دووەم</p>
+              <h2 id="infoTitle">پڕکردنەوەی زانیاری</h2>
+            </div>
+            <p class="hint">تکایە هەموو خانە پێویستەکان بە دروستی پڕ بکەوە.</p>
+          </article>
+
+          <!-- ناوی تەواو -->
+          <article class="question-card question-card--wide">
+            <label class="field-label" for="fullName">ناوی تەواو ( ناو بە ئینگلیزی )*</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Mhamad Ahmad" required minlength="3"
+              pattern="[A-Za-z\s]+" inputmode="latin">
+          </article>
+
+          <!-- ژمارەی مۆبایل -->
+          <article class="question-card question-card--half">
+            <label class="field-label" for="phone">ژمارەی مۆبایل *</label>
+            <input id="phone" name="phone" type="tel" placeholder="07501234567" required pattern="07[0-9]{9}">
+          </article>
+
+          <!-- ئیمەیڵ -->
+          <article class="question-card question-card--half">
+            <label class="field-label" for="email">ئیمەیڵ *</label>
+            <input id="email" name="email" type="email" placeholder="example@gmail.com" required inputmode="email">
+          </article>
+
+          <!-- شار -->
+          <article class="question-card question-card--half">
+            <label class="field-label" for="city">شار *</label>
+            <input id="city" name="city" type="text" placeholder="ناوی شارەکەت" required minlength="2">
+          </article>
+
+          <!-- ڕەگەز -->
+          <article class="question-card question-card--half">
+            <fieldset class="field-fieldset">
+              <legend class="field-label">ڕەگەز *</legend>
+              <div class="radio-group" id="genderGroup">
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="نێر" required>
+                  <span>نێر</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="مێ">
+                  <span>مێ</span>
+                </label>
+              </div>
+            </fieldset>
+          </article>
+
+          <!-- تەمەن -->
+          <article class="question-card question-card--wide">
+            <label class="field-label" for="age">تەمەن *</label>
+            <input id="age" name="age" type="number" placeholder="تەمەنت بنووسە" required min="10" max="80">
+          </article>
+
+          <!-- بەش -->
+          <article class="question-card question-card--half">
+            <label class="field-label" for="department">بەش *</label>
+            <input id="department" name="department" type="text" placeholder="وەک: پزیشکی، ددان، پەرستاری..." required
+              minlength="2">
+          </article>
+
+          <!-- پیشە -->
+          <article class="question-card question-card--wide">
+            <fieldset class="field-fieldset">
+              <legend class="field-label">پیشە *</legend>
+              <div class="radio-group" id="professionGroup">
+                <label class="radio-card">
+                  <input type="radio" name="profession" value="خوێندکار" required>
+                  <span>خوێندکار</span>
+                </label>
+                
+                <label class="radio-card radio-card--other" id="profLabelOther">
+                  <input type="radio" name="profession" value="other" id="profRadioOther">
+                  <span>تر</span>
+                  <input type="text" id="professionOther" name="professionOther" class="other-input"
+                    placeholder="پیشەکەت بنووسە..." disabled tabindex="-1" autocomplete="off">
+                </label>
+              </div>
+            </fieldset>
+          </article>
+
+          <div class="panel-actions">
+            <button class="button button--ghost" type="button" data-prev>گەڕانەوە</button>
+            <button class="button button--primary" type="button" data-next>چوونە پشکنینەوە</button>
+          </div>
+        </section>
+
+        <!-- ══ Step 2: Review ═════════════════════ -->
+        <section class="step-panel step-panel--review" data-step="2" aria-labelledby="reviewTitle">
+          <article class="question-card question-card--lead">
+            <div class="section-card__head">
+              <p class="section-kicker">هەنگاوی سێیەم</p>
+              <h2 id="reviewTitle">پشکنینەوە و ناردن</h2>
+            </div>
+            <p class="hint">
+              پێش ناردنی فۆڕمەکە، تکایە هەموو زانیارییەکان بخوێنەوە. ئەگەر هەڵەیەک هەیە، بگەڕێرەوە و دەستکاری بکە.
+            </p>
+          </article>
+
+          <article class="question-card question-card--wide review-card">
+            <div id="reviewList" class="review-list" aria-live="polite"></div>
+          </article>
+
+          <article class="question-card question-card--wide">
+            <label class="checkbox-card" for="confirmAccuracy">
+              <input id="confirmAccuracy" name="confirmAccuracy" type="checkbox" required>
+              <span>دڵنیام لە دروستی زانیارییەکان و ئامادەم بۆ ناردنی فۆڕمەکە.</span>
+            </label>
+          </article>
+
+          <div id="submitMessage" class="submit-message" aria-live="polite"></div>
+
+          <div class="panel-actions">
+            <button class="button button--ghost" type="button" data-prev>گەڕانەوە</button>
+            <button class="button button--primary" id="submitButton" type="submit">ناردنی فۆڕم</button>
+          </div>
+        </section>
+
+        <!-- ══ Step 3: Success ════════════════════ -->
+        <section class="step-panel step-panel--success" data-step="3" aria-labelledby="successTitle">
+          <article class="section-card success-card">
+            <div class="success-badge" aria-hidden="true">✓</div>
+            <div class="section-card__head">
+              <p class="section-kicker">تەواوبوو</p>
+              <h2 id="successTitle">فۆڕمەکەت بە سەرکەوتوویی نێردرا</h2>
+            </div>
+            <p class="lead lead--small">
+              سوپاس بۆ تۆمارکردن. زانیارییەکانت گەیشتنە لای ڕێکخەرانی خول.
+            </p>
+            <div class="panel-actions panel-actions--end">
+              <button class="button button--secondary" id="restartButton" type="button">
+                فۆڕمێکی نوێ
+              </button>
+            </div>
+          </article>
+        </section>
+      </form>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
