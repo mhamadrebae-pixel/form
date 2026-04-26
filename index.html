@@ -4,33 +4,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فۆڕمی تۆمارکردن</title>
+  <meta name="description" content="تۆمارکردن بۆ خولی کانولا دانان و جۆرەکانی دەرزی لێدان — دەزگای روانگە، هەڵەبجە">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#176f86">
+  <meta name="color-scheme" content="dark">
+ 
+  <!-- Open Graph -->
+  <meta property="og:title" content="تۆمارکردن — کانولا دانان و دەرزی لێدان">
+  <meta property="og:description" content="خولی پراکتیکی پزیشکی لە دەزگای روانگە، هەڵەبجە. تۆمارکردن ئۆنلاین.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ckb_IQ">
+ 
+  <title>فۆڕمی تۆمارکردن — دەزگای روانگە</title>
   <link rel="icon" type="image/png" href="rwanga.png">
+ 
+  <!-- Font performance: preconnect + non-blocking load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+    media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap">
+  </noscript>
+ 
   <link rel="stylesheet" href="style.css">
 </head>
  
 <body>
   <div class="page-shell">
-    <main class="form-shell">
-    
-      <header class="title-card">
+    <main class="form-shell" role="main" id="main-content">
+ 
+      <header class="title-card" role="banner">
         <div class="title-card__accent" aria-hidden="true"></div>
  
-        <div class="org-badge">
+        <div class="org-badge" role="note">
           <span class="org-badge__dot" aria-hidden="true"></span>
           دەزگای روانگە — زنجیرە کۆرسی گەنجی بەرهەمدار
         </div>
  
         <p class="eyebrow">Cannulation and Types of Injections</p>
-        <h1>کانولا دانان و جۆرەکانی دەرزی لێدەن و فریاگوزاری سەرەتایی</h1>
+        <h1>کانولا دانان و جۆرەکانی دەرزی لێدان و فریاگوزاری سەرەتایی</h1>
  
         <p class="lead">
           لە چوارچێوەی پڕۆژەی زنجیرە کۆرسی گەنجی بەرهەمدار، ئەم خولە بە شێوازێکی
           پراکتیکی پێشکەوتوو و سەردەمیانە <strong>بە شێوەی ئۆنلاین</strong> پێشکەش دەکرێت.
         </p>
  
-        <div class="course-meta">
-          <div class="course-meta__item">
+        <div class="course-meta" role="list" aria-label="زانیارییەکانی خول">
+          <div class="course-meta__item" role="listitem">
             <span class="course-meta__icon" aria-hidden="true">📅</span>
             <div>
               <span class="course-meta__label">بەروار</span>
@@ -41,19 +66,20 @@
               </span>
             </div>
           </div>
-          <div class="course-meta__item">
+          <div class="course-meta__item" role="listitem">
             <span class="course-meta__icon" aria-hidden="true">⏱</span>
             <div>
               <span class="course-meta__label">ماوە</span>
               <span class="course-meta__value">٢ ڕۆژ</span>
             </div>
           </div>
-          <div class="course-meta__item">
+          <div class="course-meta__item" role="listitem">
             <span class="course-meta__icon" aria-hidden="true">📍</span>
             <div>
               <span class="course-meta__label">شوێن</span>
               <span class="course-meta__value">
-                <a href="https://maps.app.goo.gl/pkV5ePofHRRp8667A" target="_blank" rel="noopener noreferrer" class="location-link">
+                <a href="https://maps.app.goo.gl/pkV5ePofHRRp8667A" target="_blank" rel="noopener noreferrer"
+                  class="location-link" aria-label="هەڵەبجە - هۆڵی ڕوانگە (کرتە بکە بۆ نەخشە)">
                   هەڵەبجە - هۆڵی ڕوانگە
                 </a>
               </span>
@@ -66,74 +92,77 @@
         </p>
       </header>
  
-      <ol class="stepper" aria-label="هەنگاوەکانی فۆڕم">
-        <li class="stepper__item is-active" data-step-chip="0">
-          <span class="stepper__number">١</span>
-          <span class="stepper__label">پێشەکی</span>
-        </li>
-        <li class="stepper__item" data-step-chip="1">
-          <span class="stepper__number">٢</span>
-          <span class="stepper__label">زانیارییەکان</span>
-        </li>
-        <li class="stepper__item" data-step-chip="2">
-          <span class="stepper__number">٣</span>
-          <span class="stepper__label">پشکنین و ناردن</span>
-        </li>
-      </ol>
+      <nav aria-label="هەنگاوەکانی فۆڕم">
+        <ol class="stepper">
+          <li class="stepper__item is-active" data-step-chip="0" aria-current="step">
+            <span class="stepper__number" aria-hidden="true">١</span>
+            <span class="stepper__label">پێشەکی</span>
+          </li>
+          <li class="stepper__item" data-step-chip="1">
+            <span class="stepper__number" aria-hidden="true">٢</span>
+            <span class="stepper__label">زانیارییەکان</span>
+          </li>
+          <li class="stepper__item" data-step-chip="2">
+            <span class="stepper__number" aria-hidden="true">٣</span>
+            <span class="stepper__label">پشکنین و ناردن</span>
+          </li>
+        </ol>
+      </nav>
  
-      <form id="multiStepForm" novalidate autocomplete="on">
+      <form id="multiStepForm" novalidate autocomplete="on" aria-label="فۆڕمی تۆمارکردن">
+        <!-- Honeypot -->
         <div class="form-trap" aria-hidden="true">
           <label for="companyWebsite">Leave this field empty</label>
           <input id="companyWebsite" name="companyWebsite" type="text" tabindex="-1" autocomplete="new-password">
         </div>
  
         <!-- ══ Step 0: Intro ══════════════════════ -->
-        <section class="step-panel step-panel--intro is-active" data-step="0" aria-labelledby="introTitle">
+        <section class="step-panel step-panel--intro is-active" data-step="0" aria-labelledby="introTitle"
+          role="region">
  
           <article class="section-card intro-card">
             <div class="section-card__head">
-              <p class="section-kicker">هەنگاوی یەکەم</p>
+              <p class="section-kicker" aria-hidden="true">هەنگاوی یەکەم</p>
               <h2 id="introTitle">پێشەکی خول</h2>
             </div>
  
             <div class="intro-copy">
               <p>ئەم خولە بۆ فێرکردنی بنەماکانی دەرزی لێدان، کانولا دانان، و هەندێک ڕێنمایی گرنگی پزیشکییە.</p>
-              <p>تکایە پێش پڕکردنەوەی فۆڕم دڵنیابە کە زانیارییەکانت دروستن، چونکە دواتر بۆ پەیوەندی کردن بەکار دەهێنرێن.
-              </p>
+              <p>تکایە پێش پڕکردنەوەی فۆڕم دڵنیابە کە زانیارییەکانت دروستن، چونکە دواتر بۆ پەیوەندی کردن بەکار دەهێنرێن.</p>
             </div>
  
-            <div class="program-grid" aria-label="بوارەکانی خول">
-              <div class="program-pill">
+            <div class="program-grid" role="list" aria-label="بوارەکانی خول">
+              <div class="program-pill" role="listitem">
                 <span class="program-pill__icon" aria-hidden="true">💉</span>
                 <span class="program-pill__label">دەرزی لێدان</span>
               </div>
-              <div class="program-pill">
+              <div class="program-pill" role="listitem">
                 <span class="program-pill__icon" aria-hidden="true">🩺</span>
                 <span class="program-pill__label">کانولا دانان</span>
               </div>
-              <div class="program-pill">
+              <div class="program-pill" role="listitem">
                 <span class="program-pill__icon" aria-hidden="true">📋</span>
                 <span class="program-pill__label">ڕێنمایی پزیشکی</span>
               </div>
-              <div class="program-pill">
+              <div class="program-pill" role="listitem">
                 <span class="program-pill__icon" aria-hidden="true">🔬</span>
                 <span class="program-pill__label">مەشق و پراکتیک</span>
               </div>
             </div>
  
-            <div class="notice-grid">
-              <div class="notice-box">
+            <div class="notice-grid" role="list">
+              <div class="notice-box" role="listitem">
                 <h3>تێبینی گرنگ</h3>
                 <p>ئەم خولە زیاتر بۆ بەشە پزیشکییەکانە. دوای تۆمارکردن، زانیارییەکان پشکنین دەکرێن.</p>
               </div>
-              <div class="notice-box notice-box--soft">
+              <div class="notice-box notice-box--soft" role="listitem">
                 <h3>دوای ناردن</h3>
                 <p>دوای ناردنی فۆڕم، زانیارییەکانت ڕاستەوخۆ دەچنە لای ڕێکخەرانی خول.</p>
               </div>
             </div>
  
             <label class="checkbox-card" for="confirmRead">
-              <input id="confirmRead" name="confirmRead" type="checkbox">
+              <input id="confirmRead" name="confirmRead" type="checkbox" aria-required="true">
               <span class="checkbox-card__body">
                 <strong class="checkbox-card__title">پێش بەردەوامبوون دڵنیابە</strong>
                 <span class="checkbox-card__text">زانیارییەکانی خولم خوێندەوە و ئامادەم بۆ چوونە هەنگاوی داهاتوو.</span>
@@ -141,18 +170,21 @@
             </label>
  
             <div class="panel-actions panel-actions--end">
-              <button class="button button--primary" id="startButton" type="button" disabled>
+              <button class="button button--primary" id="startButton" type="button" disabled
+                aria-describedby="startHint">
                 چوونە هەنگاوی دووەم
               </button>
+              <span id="startHint" class="sr-only">تکایە تیکی دڵنیابوونەوەکە هەڵبژێرە تا دەکرێت بەردەوام بیت</span>
             </div>
           </article>
         </section>
  
         <!-- ══ Step 1: Info ═══════════════════════ -->
-        <section class="step-panel step-panel--details" data-step="1" aria-labelledby="infoTitle" hidden>
+        <section class="step-panel step-panel--details" data-step="1" aria-labelledby="infoTitle" hidden
+          role="region">
           <article class="question-card question-card--lead">
             <div class="section-card__head">
-              <p class="section-kicker">هەنگاوی دووەم</p>
+              <p class="section-kicker" aria-hidden="true">هەنگاوی دووەم</p>
               <h2 id="infoTitle">پڕکردنەوەی زانیاری</h2>
             </div>
             <p class="hint">تکایە هەموو خانە پێویستەکان بە دروستی پڕ بکەوە.</p>
@@ -160,37 +192,40 @@
  
           <!-- ناوی تەواو -->
           <article class="question-card question-card--wide">
-            <label class="field-label" for="fullName">ناوی تەواو ( ناو بە ئینگلیزی )*</label>
+            <label class="field-label" for="fullName">ناوی تەواو <span class="field-label__sub">( ناو بە ئینگلیزی )</span> <span class="field-required" aria-hidden="true">*</span></label>
             <input id="fullName" name="fullName" type="text" placeholder="Mhamad Ahmad" required minlength="3"
-              pattern="[A-Za-z][A-Za-z\s'.-]*" autocomplete="name" autocapitalize="words" spellcheck="false" lang="en" dir="ltr">
+              pattern="[A-Za-z][A-Za-z\s'.-]*" autocomplete="name" autocapitalize="words" spellcheck="false" lang="en"
+              dir="ltr" aria-required="true">
           </article>
  
           <!-- ژمارەی مۆبایل -->
           <article class="question-card question-card--half">
-            <label class="field-label" for="phone">ژمارەی مۆبایل *</label>
-            <input id="phone" name="phone" type="tel" placeholder="07501234567" required minlength="10"
-              pattern="07[0-9]{8,9}" inputmode="numeric" autocomplete="tel-national" dir="ltr">
+            <label class="field-label" for="phone">ژمارەی مۆبایل <span class="field-required" aria-hidden="true">*</span></label>
+            <input id="phone" name="phone" type="tel" placeholder="07501234567" required minlength="11" maxlength="11"
+              pattern="07(50|70|80|90)[0-9]{7}" inputmode="numeric" autocomplete="tel-national" dir="ltr"
+              aria-required="true" aria-describedby="phone-hint">
+            <span id="phone-hint" class="field-hint">نموونە: 07501234567</span>
           </article>
  
           <!-- ئیمەیڵ -->
           <article class="question-card question-card--half">
-            <label class="field-label" for="email">ئیمەیڵ *</label>
+            <label class="field-label" for="email">ئیمەیڵ <span class="field-required" aria-hidden="true">*</span></label>
             <input id="email" name="email" type="email" placeholder="example@gmail.com" required inputmode="email"
-              autocomplete="email" spellcheck="false" dir="ltr">
+              autocomplete="email" spellcheck="false" dir="ltr" aria-required="true">
           </article>
  
           <!-- شار -->
           <article class="question-card question-card--half">
-            <label class="field-label" for="city">شار *</label>
+            <label class="field-label" for="city">شار <span class="field-required" aria-hidden="true">*</span></label>
             <input id="city" name="city" type="text" placeholder="ناوی شارەکەت" required minlength="2"
-              autocomplete="address-level2" list="citySuggestions">
+              autocomplete="address-level2" list="citySuggestions" aria-required="true">
           </article>
  
           <!-- ڕەگەز -->
           <article class="question-card question-card--half">
-            <fieldset class="field-fieldset">
-              <legend class="field-label">ڕەگەز *</legend>
-              <div class="radio-group" id="genderGroup">
+            <fieldset class="field-fieldset" aria-required="true">
+              <legend class="field-label">ڕەگەز <span class="field-required" aria-hidden="true">*</span></legend>
+              <div class="radio-group" id="genderGroup" role="radiogroup">
                 <label class="radio-card">
                   <input type="radio" name="gender" value="نێر" required autocomplete="sex">
                   <span>نێر</span>
@@ -205,22 +240,23 @@
  
           <!-- تەمەن -->
           <article class="question-card question-card--half">
-            <label class="field-label" for="age">تەمەن *</label>
-            <input id="age" name="age" type="number" placeholder="تەمەنت بنووسە" required min="10" max="80">
+            <label class="field-label" for="age">تەمەن <span class="field-required" aria-hidden="true">*</span></label>
+            <input id="age" name="age" type="number" placeholder="تەمەنت بنووسە" required min="10" max="80"
+              inputmode="numeric" aria-required="true">
           </article>
  
           <!-- بەش -->
           <article class="question-card question-card--half">
-            <label class="field-label" for="department">بەش *</label>
+            <label class="field-label" for="department">بەش <span class="field-required" aria-hidden="true">*</span></label>
             <input id="department" name="department" type="text" placeholder="وەک: پزیشکی، ددان، پەرستاری..." required
-              minlength="2" autocomplete="organization-title" list="departmentSuggestions">
+              minlength="2" autocomplete="organization-title" list="departmentSuggestions" aria-required="true">
           </article>
  
           <!-- پیشە -->
           <article class="question-card question-card--wide">
-            <fieldset class="field-fieldset">
-              <legend class="field-label">پیشە *</legend>
-              <div class="radio-group radio-group--profession" id="professionGroup">
+            <fieldset class="field-fieldset" aria-required="true">
+              <legend class="field-label">پیشە <span class="field-required" aria-hidden="true">*</span></legend>
+              <div class="radio-group radio-group--profession" id="professionGroup" role="radiogroup">
                 <label class="radio-card">
                   <input type="radio" name="profession" value="خوێندکار" required>
                   <span>خوێندکار</span>
@@ -229,9 +265,10 @@
                   <label class="other-combo__radio" for="profRadioOther">
                     <input type="radio" name="profession" value="other" id="profRadioOther">
                     <span>تر</span>
-                  </label> 
-                  <input type="text" id="professionOther" name="professionOther" class="other-input other-input--standalone"
-                    placeholder="پیشەکەت بنووسە..." autocomplete="organization-title" list="professionSuggestions" disabled>
+                  </label>
+                  <input type="text" id="professionOther" name="professionOther"
+                    class="other-input other-input--standalone" placeholder="پیشەکەت بنووسە..."
+                    autocomplete="organization-title" list="professionSuggestions" disabled aria-label="پیشەی تر">
                 </div>
               </div>
             </fieldset>
@@ -246,20 +283,20 @@
           </datalist>
  
           <datalist id="departmentSuggestions"></datalist>
- 
           <datalist id="professionSuggestions"></datalist>
  
           <div class="panel-actions">
-            <button class="button button--ghost" type="button" data-prev>گەڕانەوە</button>
+            <button class="button button--ghost" type="button" data-prev aria-label="گەڕانەوە بۆ هەنگاوی پێشوو">گەڕانەوە</button>
             <button class="button button--primary" type="button" data-next>چوونە پشکنینەوە</button>
           </div>
         </section>
  
         <!-- ══ Step 2: Review ═════════════════════ -->
-        <section class="step-panel step-panel--review" data-step="2" aria-labelledby="reviewTitle" hidden>
+        <section class="step-panel step-panel--review" data-step="2" aria-labelledby="reviewTitle" hidden
+          role="region">
           <article class="question-card question-card--lead">
             <div class="section-card__head">
-              <p class="section-kicker">هەنگاوی سێیەم</p>
+              <p class="section-kicker" aria-hidden="true">هەنگاوی سێیەم</p>
               <h2 id="reviewTitle">پشکنینەوە و ناردن</h2>
             </div>
             <p class="hint">
@@ -268,37 +305,52 @@
           </article>
  
           <article class="question-card question-card--wide review-card">
-            <div id="reviewList" class="review-list" aria-live="polite"></div>
+            <div id="reviewList" class="review-list" aria-live="polite" aria-label="پوختەی زانیارییەکانت"></div>
           </article>
  
           <article class="question-card question-card--wide">
             <label class="checkbox-card" for="confirmAccuracy">
-              <input id="confirmAccuracy" name="confirmAccuracy" type="checkbox" required>
+              <input id="confirmAccuracy" name="confirmAccuracy" type="checkbox" required aria-required="true">
               <span>دڵنیام لە دروستی زانیارییەکان و ئامادەم بۆ ناردنی فۆڕمەکە.</span>
             </label>
           </article>
  
-          <div id="submitMessage" class="submit-message" aria-live="polite"></div>
+          <div id="submitMessage" class="submit-message" aria-live="assertive" role="status"></div>
  
           <div class="panel-actions">
-            <button class="button button--ghost" type="button" data-prev>گەڕانەوە</button>
-            <button class="button button--primary" id="submitButton" type="submit">ناردنی فۆڕم</button>
+            <button class="button button--ghost" type="button" data-prev aria-label="گەڕانەوە بۆ هەنگاوی پێشوو">گەڕانەوە</button>
+            <button class="button button--primary" id="submitButton" type="submit" aria-describedby="submitMessage">
+              <span class="btn-text">ناردنی فۆڕم</span>
+              <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
           </div>
         </section>
  
         <!-- ══ Step 3: Success ════════════════════ -->
-        <section class="step-panel step-panel--success" data-step="3" aria-labelledby="successTitle" hidden>
+        <section class="step-panel step-panel--success" data-step="3" aria-labelledby="successTitle" hidden
+          role="region">
           <article class="section-card success-card">
-            <div class="success-badge" aria-hidden="true">✓</div>
+            <div class="success-badge" aria-hidden="true">
+              <span class="success-badge__check">✓</span>
+            </div>
+            <div class="success-confetti" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+            </div>
             <div class="section-card__head">
               <p class="section-kicker">تەواوبوو</p>
-              <h2 id="successTitle">فۆڕمەکەت بە سەرکەوتوویی نێردرا</h2>
+              <h2 id="successTitle" tabindex="-1">فۆڕمەکەت بە سەرکەوتوویی نێردرا</h2>
             </div>
             <p class="lead lead--small">
               سوپاس بۆ تۆمارکردن. زانیارییەکانت گەیشتنە لای ڕێکخەرانی خول.
+              بەزووی پەیوەندیت پێوە دەکرێت.
             </p>
-            <div class="panel-actions panel-actions--end">
-              <button class="button button--secondary" id="restartButton" type="button">
+            <p class="lead lead--small success-note">
+              تکایە ئامادە بە بۆ پەیوەندی کردن لە ڕێگای تەلەفۆن یان ئیمەیڵ.
+            </p>
+            <div class="panel-actions panel-actions--end panel-actions--center">
+              <button class="button button--secondary" id="restartButton" type="button"
+                aria-label="کرتە بکە بۆ داخلبوون بۆ فۆڕمێکی نوێ">
                 فۆڕمێکی نوێ
               </button>
             </div>
@@ -308,14 +360,15 @@
     </main>
   </div>
  
-  <footer class="dev-footer">
+  <footer class="dev-footer" role="contentinfo">
     <div class="dev-footer__inner">
       <span class="dev-footer__line" aria-hidden="true"></span>
       <div class="dev-footer__content">
         <span class="dev-footer__text">مافی ئەم وێبسایتە پارێزراوە بۆ </span>
-        <a href="https://mhamadrebae-pixel.github.io/my-profile/index.html" target="_blank" rel="noopener noreferrer" class="dev-footer__link">
+        <a href="https://mhamadrebae-pixel.github.io/my-profile/index.html" target="_blank" rel="noopener noreferrer"
+          class="dev-footer__link" aria-label="پرۆفایلی mhamad rebar (دەکرێتە لاپەڕەیەکی تازە)">
           <span class="dev-footer__dot" aria-hidden="true"></span>
-          mhamad rebar
+          mhamad rebar ©
         </a>
       </div>
       <span class="dev-footer__line" aria-hidden="true"></span>
@@ -326,3 +379,4 @@
 </body>
  
 </html>
+ 
