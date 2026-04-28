@@ -680,10 +680,19 @@ input[type="number"]::-webkit-outer-spin-button {
   direction: ltr;
 }
 
+#fullNameKurdish {
+  text-align: right;
+  direction: rtl;
+}
+
 #fullName::placeholder,
 #phone::placeholder,
 #email::placeholder {
   text-align: left;
+}
+
+#fullNameKurdish::placeholder {
+  text-align: right;
 }
 
 /* ─── Checkbox Card ───────────────────────────────────────────── */
@@ -754,14 +763,18 @@ input[type="number"]::-webkit-outer-spin-button {
 .checkbox-card input[type="checkbox"]:checked::after {
   content: "";
   position: absolute;
+
   top: 3px;
   right: 7px;
-  width: 5px;
-  height: 11px;
+
+  width: 6px;
+  height: 12px;
+
   border: 2.5px solid #084d55;
   border-top: none;
-  border-right: none;
-  transform: rotate(-45deg) scaleX(-1);
+  border-left: none;
+
+  transform: rotate(45deg);
 }
 
 .checkbox-card__body {
@@ -788,7 +801,8 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 20px;
   height: 20px;
 
-  margin-inline-start: 6px;  /* زۆر گرنگ */
+  margin-inline-start: 6px;
+  /* زۆر گرنگ */
 
   flex-shrink: 0;
   border-radius: 50%;
@@ -1806,6 +1820,7 @@ input[list]::-webkit-list-button {
     transition: none;
   }
 }
+
 /* Fix checkbox position: move checkbox icon to left side */
 .checkbox-card {
   display: flex;
@@ -1813,12 +1828,16 @@ input[list]::-webkit-list-button {
   align-items: center;
   flex-wrap: nowrap;
   gap: 16px;
-   flex-direction: row-reverse; /* ✓ دەبات بۆ لای ڕاست */
+  flex-direction: row-reverse;
+  /* ✓ دەبات بۆ لای ڕاست */
 }
+
 .checkbox-card input[type="checkbox"] {
   margin-inline-start: 0;
-  margin-inline-end: 8px; /* دووری بچووک لە نووسین */
+  margin-inline-end: 8px;
+  /* دووری بچووک لە نووسین */
 }
+
 .checkbox-card input[type="checkbox"] {
   flex: 0 0 24px;
   margin-inline-start: 0;

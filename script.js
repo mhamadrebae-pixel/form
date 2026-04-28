@@ -11,7 +11,7 @@ window.scrollTo(0, 0);
  
 // ─── Config ─────────────────────────────────────────────────────
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbz7TBH6idJYxkWZXoahqruVXrkWpb17YpsTf92xNHUy8vmeoM9Tsepelu7Q2uiW8Vuk/exec";
+  "https://script.google.com/macros/s/AKfycbx6y3UAh9o0T44mUec9SiRbicNj7EDg_xWSOANoJ4hKGlSpACZw1vbFFHKhy1y2KWf_/exec";
  
 const FETCH_TIMEOUT_MS = 10_000;
  
@@ -25,6 +25,8 @@ const SUCCESS_STEP = 3;
 const PHONE_RE       = /^07(50|70|80|90)\d{7}$/;
 // ASCII-only email (no Unicode characters)
 const EMAIL_RE       = /^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/;
+const KURDISH_NAME_RE = /^[\u0600-\u06FF\s]+$/;
+const KURDISH_DIGIT_RE = /[0-9\u0660-\u0669\u06F0-\u06F9]/;
 const FULL_NAME_RE   = /^[A-Za-z][A-Za-z\s'.-]*$/;
 const SHEET_FORMULA_RE = /^[=+\-@|%]/;  // Extended formula injection protection
  
@@ -49,6 +51,7 @@ let isSubmitting = false;  // Double-submit guard
  
 // ─── Review fields definition ───────────────────────────────────
 const reviewFields = [
+  ["ناوی سیانی بە کوردی", "nameKurdish"],
   ["ناوی تەواو",    "name"],
   ["ژمارەی مۆبایل", "phone"],
   ["ئیمەیڵ",        "email"],
@@ -61,6 +64,7 @@ const reviewFields = [
  
 // ─── User-facing messages ────────────────────────────────────────
 const messages = {
+  fullNameKurdish: "تکایە ناوی سیانی بە کوردی بنووسە. نابێت پیتی ئینگلیزی یان ژمارە تێدا بێت. نموونە: محەمەد ئەحمەد عەلی",
   botBlocked:      "ناردن ڕاگیرا، تکایە پەڕەکە نوێ بکەرەوە و دووبارە هەوڵ بدەرەوە.",
   checkboxIntro:   "تکایە دڵنیابوونەوەکە هەڵبژێرە.",
   checkboxReview:  "تکایە دڵنیابوونەوەی کۆتایی هەڵبژێرە.",
@@ -360,6 +364,7 @@ function getCurrentPanel() {
 function getFieldErrorMessage(field) {
   const name  = field.name || field.id;
   const value = field.type === "checkbox" ? "" : field.value.trim();
+  const isKurdishNameField = name === "fullNameKurdish" || field.id === "fullNameKurdish";
  
   // Checkbox required
   if (field.type === "checkbox" && field.required && !field.checked) {
@@ -372,6 +377,14 @@ function getFieldErrorMessage(field) {
   if (field.required && field.type !== "checkbox" && value === "") {
     if (name === "professionOther") return messages.professionOther;
     return messages.required;
+  }
+
+  if (
+    isKurdishNameField &&
+    value !== "" &&
+    (!KURDISH_NAME_RE.test(value) || KURDISH_DIGIT_RE.test(value))
+  ) {
+    return messages.fullNameKurdish;
   }
  
   // Full name: English only, no Unicode
@@ -402,6 +415,7 @@ function getFieldErrorMessage(field) {
   }
  
   if (field.validity.patternMismatch) {
+    if (isKurdishNameField) return messages.fullNameKurdish;
     if (name === "fullName") return messages.fullName;
     if (name === "phone")    return messages.phone;
     return messages.invalid;
@@ -491,36 +505,38 @@ function validatePanel(panel) {
  
 function getFormData() {
   const fd = new FormData(form);
-  const professionRadio  = String(fd.get("profession")      || "").trim();
+  const professionRadio = String(fd.get("profession") || "").trim();
   const professionOtherText = String(fd.get("professionOther") || "").trim();
   const profession = professionRadio === "other" ? professionOtherText : professionRadio;
  
   return {
-    name:       String(fd.get("fullName")    || "").trim(),
-    phone:      String(fd.get("phone")       || "").trim(),
-    email:      String(fd.get("email")       || "").trim().toLowerCase(),
-    city:       String(fd.get("city")        || "").trim(),
-    gender:     String(fd.get("gender")      || "").trim(),
-    age:        String(fd.get("age")         || "").trim(),
-    department: String(fd.get("department")  || "").trim(),
+    nameKurdish: String(fd.get("fullNameKurdish") || "").trim(),
+    name: String(fd.get("fullName") || "").trim(),
+    phone: String(fd.get("phone") || "").trim(),
+    email: String(fd.get("email") || "").trim().toLowerCase(),
+    city: String(fd.get("city") || "").trim(),
+    gender: String(fd.get("gender") || "").trim(),
+    age: String(fd.get("age") || "").trim(),
+    department: String(fd.get("department") || "").trim(),
     profession,
   };
 }
  
 function getSubmissionData() {
-  const payload = {
-    ...getFormData(),
-    submittedAt:   new Date().toISOString(),
-    pageLanguage:  document.documentElement.lang  || "",
-    pageDirection: document.documentElement.dir   || "",
-    sourcePage:    window.location.href           || "",
-    userAgent:     navigator.userAgent            || "",
+  const data = getFormData();
+
+  // Keep the payload limited to the sheet fields and in sheet column order.
+  return {
+    nameKurdish: sanitizeSheetValue(data.nameKurdish),
+    name: sanitizeSheetValue(data.name),
+    phone: sanitizeSheetValue(data.phone),
+    email: sanitizeSheetValue(data.email),
+    city: sanitizeSheetValue(data.city),
+    gender: sanitizeSheetValue(data.gender),
+    age: sanitizeSheetValue(data.age),
+    department: sanitizeSheetValue(data.department),
+    profession: sanitizeSheetValue(data.profession),
   };
- 
-  // Sanitize every value against Google Sheets formula injection
-  return Object.fromEntries(
-    Object.entries(payload).map(([key, val]) => [key, sanitizeSheetValue(val)])
-  );
 }
  
 // ═══════════════════════════════════════════════════════════════
@@ -663,6 +679,23 @@ function handleFieldInput(field) {
   }
  
   // Full name — live validate
+  if (field.id === "fullNameKurdish") {
+    if (field.value === "") {
+      field.setCustomValidity("");
+      clearError(field);
+      return;
+    }
+    const hasInvalidChars =
+      !KURDISH_NAME_RE.test(field.value) ||
+      KURDISH_DIGIT_RE.test(field.value);
+    if (hasInvalidChars || (card && card.classList.contains("has-error"))) {
+      validateField(field);
+    } else if (field.value.trim().length >= Number(field.minLength || 0)) {
+      clearError(field);
+    }
+    return;
+  }
+
   if (field.id === "fullName") {
     if (field.value === "") {
       field.setCustomValidity("");
