@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>بانگهێشتنامە - ڕێدیار</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Noto Naskh Arabic', 'Playfair Display', serif;
+            direction: rtl;
+            overflow-x: hidden;
+            background: #f5f0eb;
+        }
+
+        .fixed-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: url('02.JPG');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f5f0eb;
+        }
+
+        .fixed-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.40);
+            z-index: 1;
+        }
+
+        /* دوگمەی سوییچ لە سەرەوە */
+        .top-nav-bar {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            right: 18px;
+            z-index: 99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .top-nav-bar > * {
+            pointer-events: auto;
+        }
+
+        .switch-to-modern {
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 30px;
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .switch-to-modern:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+
+        /* ===== پەڕەی یەکەم ===== */
+        #page1 {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            background-image: url('01.jpeg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f5f0eb;
+            transition: all 0.6s ease;
+            z-index: 2;
+        }
+
+        #page1.open {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .scroll-down .hint {
+            color: #f5e6d3;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+        }
+
+        .scroll-down .arrow {
+            font-size: 5.5rem;
+            color: #f5e6d3;
+            animation: bounceDown 2s infinite ease-in-out;
+            opacity: 0.85;
+            line-height: 0.8;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(18px); opacity: 1; }
+        }
+
+        /* ===== پەڕەکانی دیکە ===== */
+        .page {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 20px;
+        }
+
+        .glass-card {
+            max-width: 750px;
+            width: 100%;
+            padding: 35px 30px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 45px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 215, 0, 0.25);
+        }
+
+        .ayah-text {
+            font-size: 1.35rem;
+            color: #e8d5b8;
+            line-height: 2.5;
+            max-width: 650px;
+            margin: 0 auto;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .ayah-text .bismillah {
+            font-size: 1.8rem;
+            color: #d4af37;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 14px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+        }
+
+        .names-big {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .ahang-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 2px;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
+        }
+
+        .invite-text {
+            font-size: 1.55rem;
+            color: #e8d5b8;
+            line-height: 2.5;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .invite-text .highlight {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .gold-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 16px auto;
+            border-radius: 4px;
+        }
+
+        /* ===== تایمەر ===== */
+        .timer-wrap {
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            border-radius: 35px;
+            padding: 24px 20px;
+            border: 1px solid rgba(255, 215, 0, 0.08);
+        }
+
+        .timer-wrap h3 {
+            color: #d4af37;
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .timer-item {
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .timer-item span {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #d4af37;
+            display: block;
+            line-height: 1;
+        }
+
+        .timer-item small {
+            color: #e8d5b8;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .timer-date {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .timer-date .date-item {
+            text-align: center;
+            color: #e8d5b8;
+        }
+
+        .timer-date .date-item .label {
+            font-size: 0.75rem;
+            color: #b8902c;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .timer-date .date-item .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #d4af37;
+        }
+
+        /* ===== شوێن ===== */
+        .location-text {
+            font-size: 1.45rem;
+            color: #d4af37;
+            margin-bottom: 12px;
+            line-height: 1.8;
+            font-weight: 600;
+        }
+
+        .location-pending-box {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 12px 24px;
+            border-radius: 30px;
+            color: #f5e6d3;
+            font-size: 1.15rem;
+            margin-top: 8px;
+        }
+
+        /* ===== کۆتایی ===== */
+        .contact-item {
+            margin-top: 14px;
+        }
+
+        .contact-label {
+            font-size: 1.05rem;
+            color: #e8d5b8;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .contact-phone {
+            font-size: 1.35rem;
+            color: #d4af37;
+            font-weight: 700;
+            direction: ltr;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .family-respect {
+            font-size: 1.15rem;
+            color: #e8d5b8;
+            margin-top: 10px;
+        }
+
+        .family-names {
+            font-size: 1.9rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #d4af37;
+            margin-top: 4px;
+        }
+
+        .footer-main {
+            font-size: 1.05rem;
+            color: #e8d5b8;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 600px) {
+            #page1 { background-size: contain; }
+            .scroll-down { bottom: 40px; }
+            .scroll-down .arrow { font-size: 4.5rem; }
+            .page { padding: 12px 14px; min-height: 60vh; }
+            .glass-card { padding: 25px 18px; border-radius: 35px; }
+            .ayah-text { font-size: 1.05rem; line-height: 2.2; }
+            .names-big { font-size: 2.2rem; }
+            .ahang-title { font-size: 1.8rem; }
+            .invite-text { font-size: 1.25rem; }
+            .location-text { font-size: 1.2rem; }
+            .timer-item span { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="fixed-bg"></div>
+
+
+
+    <!-- ===== پەڕەی یەکەم ===== -->
+    <div id="page1" onclick="openInvitation()">
+        <div class="scroll-down">
+            <span class="hint">کلیک بکە بۆ کردنەوە</span>
+            <span class="arrow">▾</span>
+        </div>
+    </div>
+
+    <!-- ===== پەڕەی دووەم: ئایەت ===== -->
+    <section class="page" id="page2">
+        <div class="glass-card">
+            <div class="ayah-text">
+                <span class="bismillah">بسم الله الرحمن الرحيم</span>
+                وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== پەڕەی سێیەم: ناوی زاوا و بووک ===== -->
+    <section class="page" id="page3">
+        <div class="glass-card">
+            <h2 class="ahang-title">ئاهەنگی هاوسەرگیری</h2>
+            <div class="gold-line"></div>
+            <div class="names-big">ڕێدیار و ....</div>
+        </div>
+    </section>
+
+    <!-- ===== پەڕەی چوارەم: بانگهێشت ===== -->
+    <section class="page" id="page4">
+        <div class="glass-card">
+            <p class="invite-text">
+                ئێوە بانگهێشتن بۆ هاوبەش بوون<br />
+                لە <span class="highlight">جوانترین ساتی ژیانمان</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== پەڕەی پێنجەم: تایمەر ===== -->
+    <section class="page" id="page5">
+        <div class="glass-card">
+            <div class="timer-wrap">
+                <h3>🕊 ماوە بۆ ڕۆژی گەورە</h3>
+                <div class="timer-grid" id="countdown">
+                    <div class="timer-item"><span id="days">00</span><small>ڕۆژ</small></div>
+                    <div class="timer-item"><span id="hours">00</span><small>کاتژمێر</small></div>
+                    <div class="timer-item"><span id="minutes">00</span><small>خولەک</small></div>
+                    <div class="timer-item"><span id="seconds">00</span><small>چرکە</small></div>
+                </div>
+                <div class="timer-date">
+                    <div class="date-item">
+                        <div class="label">ڕێکەوت</div>
+                        <div class="value">06-11-2026</div>
+                    </div>
+                    <div class="date-item">
+                        <div class="label">ڕۆژ</div>
+                        <div class="value">هەینی</div>
+                    </div>
+                    <div class="date-item">
+                        <div class="label">کات</div>
+                        <div class="value">07:00 PM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== پەڕەی شەشەم: شوێن ===== -->
+    <section class="page" id="page6">
+        <div class="glass-card">
+            <div class="location-text">
+                📍 شوێنی ئاهەنگ
+            </div>
+            <div class="location-pending-box">
+                بەم زووانە ڕادەگەیەنرێت ✨
+            </div>
+            <p style="margin-top:14px; color:#e8d5b8; font-size:0.95rem;">
+                لە کاتی نزیکبوونەوەی ئاهەنگەکە، ناونیشان و لۆکەیشن لێرە دادەنرێت.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== پەڕەی حەوتەم: کۆتایی ===== -->
+    <section class="page" id="page7">
+        <div class="glass-card">
+            <p style="font-size:1.2rem; color:#e8d5b8;">
+                ئامادەبوونی خۆتان گەورەترین دیارییە بۆ ئێمە
+            </p>
+            <div class="gold-line"></div>
+
+            <div class="contact-item">
+                <span class="contact-label">📞 بۆ زانیاری و پرسیار:</span>
+                <div>
+                    <a href="tel:07713443232" class="contact-phone">07713443232</a>
+                </div>
+            </div>
+
+            <div class="gold-line"></div>
+
+            <div class="family-respect">لەگەڵ ڕێزی بنەماڵەی</div>
+            <div class="family-names">ڕێدیار و ....</div>
+
+            <div style="margin-top:16px;">
+                <p class="footer-main">✨ چاوەڕوانی خۆشەویستیتان دەکەین ✨</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function openInvitation() {
+            const page1 = document.getElementById('page1');
+            page1.classList.add('open');
+
+            setTimeout(() => {
+                document.getElementById('page2').scrollIntoView({ behavior: 'smooth' });
+            }, 400);
+        }
+
+        const target = new Date('2026-11-06T19:00:00').getTime();
+        const elements = {
+            days: document.getElementById('days'),
+            hours: document.getElementById('hours'),
+            minutes: document.getElementById('minutes'),
+            seconds: document.getElementById('seconds')
+        };
+
+        function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+
+        function update() {
+            const now = Date.now();
+            const diff = target - now;
+            if (diff < 0) {
+                Object.values(elements).forEach(el => el.textContent = '00');
+                return;
+            }
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            elements.days.textContent = pad(d);
+            elements.hours.textContent = pad(h);
+            elements.minutes.textContent = pad(m);
+            elements.seconds.textContent = pad(s);
+        }
+
+        update();
+        setInterval(update, 1000);
+    </script>
+</body>
+</html>

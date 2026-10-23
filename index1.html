@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ڕێدیار و .... | بانگهێشتنامەی هاوسەرگیری</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --cream:      #FBF6EF;
+  --ink:        #2E2A26;
+  --ink-soft:   #6B6259;
+  --gold:       #B08D3F;
+  --gold-soft:  #D9C7A0;
+  --rose:       #D3A6A1;
+  --hairline:   #E6DCC9;
+  --paper:      #FFFDF9;
+
+  --font-display: 'Noto Naskh Arabic', serif;
+  --font-body:    'Vazirmatn', sans-serif;
+}
+
+*{ box-sizing: border-box; margin:0; padding:0; -webkit-tap-highlight-color: transparent; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+body.locked{ overflow:hidden; height:100vh; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+/* ---------- ambient butterflies ---------- */
+.butterfly-layer{
+  position:fixed; inset:0; pointer-events:none; z-index:5; overflow:hidden;
+}
+.bfly{
+  position:absolute; opacity:0;
+  animation: flyIn 1.2s ease forwards;
+}
+.bfly .wing{ transform-origin:16px 12px; animation: flapWing .34s cubic-bezier(.45,0,.55,1) infinite; }
+.bfly .wing-r{ animation-delay:-.03s; }
+.bfly.far{ filter: blur(1px); }
+@keyframes flapWing{
+  0%{ transform: scaleX(1) skewY(0deg); }
+  45%{ transform: scaleX(.42) skewY(9deg); }
+  100%{ transform: scaleX(1) skewY(0deg); }
+}
+@keyframes flyIn{ to{ opacity:var(--bfly-op, .85); } }
+
+@keyframes driftA{
+  0%{ transform: translate(0,0) rotate(0deg); }
+  20%{ transform: translate(70px,-40px) rotate(14deg); }
+  40%{ transform: translate(40px,-100px) rotate(-8deg); }
+  60%{ transform: translate(-30px,-130px) rotate(10deg); }
+  80%{ transform: translate(-60px,-70px) rotate(-12deg); }
+  100%{ transform: translate(0,0) rotate(0deg); }
+}
+@keyframes driftB{
+  0%{ transform: translate(0,0) rotate(0deg); }
+  25%{ transform: translate(-60px,-50px) rotate(-10deg); }
+  50%{ transform: translate(-20px,-110px) rotate(8deg); }
+  75%{ transform: translate(50px,-60px) rotate(-6deg); }
+  100%{ transform: translate(0,0) rotate(0deg); }
+}
+@keyframes driftC{
+  0%{ transform: translate(0,0) rotate(0deg) scale(1); }
+  30%{ transform: translate(45px,-70px) rotate(12deg) scale(1.05); }
+  55%{ transform: translate(90px,-30px) rotate(-6deg) scale(1); }
+  80%{ transform: translate(30px,20px) rotate(6deg) scale(.95); }
+  100%{ transform: translate(0,0) rotate(0deg) scale(1); }
+}
+
+/* ================= ENVELOPE INTRO ================= */
+#envelope-screen{
+  position:fixed; inset:0; z-index:100;
+  background: linear-gradient(180deg,#F6EEE0, var(--cream) 60%);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:22px;
+  transition: opacity .9s ease, visibility .9s ease;
+}
+#envelope-screen.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+
+.envelope-wrap{
+  position:relative; width:min(78vw, 300px); aspect-ratio: 3/2; cursor:pointer;
+  perspective: 900px;
+  animation: envFloat 4.2s ease-in-out infinite;
+}
+.envelope-wrap.opened{ animation:none; }
+@keyframes envFloat{
+  0%,100%{ transform: translateY(0) rotate(0deg); }
+  50%{ transform: translateY(-9px) rotate(-0.6deg); }
+}
+.envelope-wrap::before{
+  content:''; position:absolute; inset:-30px; border-radius:50%;
+  background: radial-gradient(circle, rgba(176,141,63,.16), transparent 70%);
+  animation: glowPulse 4.2s ease-in-out infinite;
+  z-index:-1;
+}
+@keyframes glowPulse{ 0%,100%{ opacity:.5; transform:scale(.9); } 50%{ opacity:1; transform:scale(1.05); } }
+.env-body{
+  position:absolute; inset:0;
+  background: var(--paper);
+  border:1px solid var(--hairline);
+  border-radius:4px;
+  box-shadow: 0 18px 40px -18px rgba(46,42,38,.35);
+  transition: box-shadow 1s ease;
+}
+.envelope-wrap.opened .env-body{ box-shadow: 0 30px 60px -20px rgba(46,42,38,.45); }
+.env-flap{
+  position:absolute; top:0; left:0; right:0; height:52%;
+  background: linear-gradient(160deg, #F1E6D2, #E9D9BB);
+  clip-path: polygon(0 0, 100% 0, 50% 92%);
+  transform-origin: top center;
+  transition: transform 1s cubic-bezier(.6,.05,.2,1);
+  border-radius: 4px 4px 0 0;
+  z-index:3;
+}
+.env-seal{
+  position:absolute; top:38%; left:50%;
+  width:44px; height:44px;
+  transform:translate(-50%,-50%);
+  z-index:4;
+}
+.env-seal-half{
+  position:absolute; inset:0; width:100%; height:100%; border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #C9A15A, var(--gold));
+  box-shadow:0 4px 10px rgba(176,141,63,.4);
+  transition: transform .7s cubic-bezier(.5,0,.3,1), opacity .7s ease;
+}
+.env-seal-half.left{ clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%); }
+.env-seal-half.right{ clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); }
+.env-seal svg{
+  position:absolute; top:50%; left:50%; width:20px; height:20px;
+  transform:translate(-50%,-50%); transition:opacity .35s ease;
+}
+.envelope-wrap.opened .env-seal-half.left{ transform: translate(-14px,-6px) rotate(-25deg); opacity:0; }
+.envelope-wrap.opened .env-seal-half.right{ transform: translate(14px,-6px) rotate(25deg); opacity:0; }
+.envelope-wrap.opened .env-seal svg{ opacity:0; }
+
+.env-letter{
+  position:absolute; left:6%; right:6%; bottom:4%; top:14%;
+  background: var(--paper);
+  border:1px solid var(--hairline);
+  border-radius:3px;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:10px;
+  transform: translateY(6%) rotate(0deg) scale(1);
+  transition: transform 1.15s cubic-bezier(.32,0,.1,1) .2s, box-shadow 1.15s ease .2s;
+  z-index:2;
+}
+.env-letter p{
+  font-family: var(--font-display);
+  font-size: clamp(14px, 3.6vw, 17px);
+  color: var(--ink-soft);
+  line-height:1.7;
+  transition: opacity .4s ease .3s;
+}
+.envelope-wrap.opened .env-flap{ transform: rotateX(180deg); transition: transform 1.05s cubic-bezier(.65,0,.24,1); }
+.envelope-wrap.opened .env-letter{
+  transform: translateY(-64%) rotate(-1.5deg) scale(1.03);
+  box-shadow: 0 20px 45px -18px rgba(46,42,38,.4);
+}
+.envelope-wrap.opened .env-letter p{ opacity:0; }
+
+.env-butterfly{
+  position:absolute; top:38%; left:50%; width:30px; height:22px;
+  transform:translate(-50%,-50%) scale(.3) rotate(0deg);
+  opacity:0; z-index:6; pointer-events:none;
+}
+.envelope-wrap.opened .env-butterfly{
+  animation: envButterflyOut 1.7s cubic-bezier(.2,.6,.3,1) forwards .55s;
+}
+@keyframes envButterflyOut{
+  0%{   opacity:0;   transform:translate(-50%,-50%) scale(.3) rotate(0deg); }
+  12%{  opacity:1;   transform:translate(-56%,-90%) scale(.9) rotate(-8deg); }
+  45%{  opacity:1;   transform:translate(-30%,-190%) scale(1) rotate(10deg); }
+  75%{  opacity:1;   transform:translate(-58%,-300%) scale(.9) rotate(-6deg); }
+  100%{ opacity:0;   transform:translate(-20%,-410%) scale(.7) rotate(8deg); }
+}
+
+.tap-hint{
+  font-family: var(--font-body); font-weight:500; letter-spacing:.02em;
+  color: var(--ink-soft); font-size:14px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.tap-hint .pulse-dot{
+  width:8px; height:8px; border-radius:50%; background:var(--gold);
+  animation: pulseDot 1.6s ease-in-out infinite;
+}
+@keyframes pulseDot{ 0%,100%{ opacity:.25; transform:scale(.8);} 50%{ opacity:1; transform:scale(1.15);} }
+
+#envelope-screen.launching .envelope-wrap{
+  transition: transform .9s cubic-bezier(.6,0,.2,1), opacity .9s ease .1s;
+  transform: scale(1.4) translateY(-6vh); opacity:0;
+}
+#envelope-screen.launching .tap-hint{ opacity:0; transition:opacity .4s ease; }
+
+/* ================= MAIN CONTENT ================= */
+main{ opacity:0; transition:opacity .8s ease .3s; }
+main.revealed{ opacity:1; }
+
+.divider{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  margin: 22px auto; width:min(80%, 260px);
+}
+.divider .line{ flex:1; height:1px; background:var(--hairline); }
+.divider svg{ width:18px; height:18px; flex-shrink:0; color:var(--gold); }
+
+section{ padding: 80px 6vw; position:relative; }
+
+/* ---- HERO ---- */
+.hero{
+  min-height:100vh; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; text-align:center; padding-top:60px;
+}
+.hero-eyebrow{
+  font-size:13px; letter-spacing:.15em; color:var(--gold); font-weight:600;
+  text-transform:uppercase; opacity:0; animation: riseIn .8s ease forwards .2s;
+}
+.hero-names{
+  font-family: var(--font-display);
+  font-size: clamp(42px, 10vw, 76px);
+  color: var(--ink); margin:18px 0 6px; line-height:1.2;
+  opacity:0; animation: riseIn .9s ease forwards .4s;
+}
+.hero-names .amp{ color: var(--gold); display:inline-block; margin:0 10px; font-size:.7em; vertical-align:middle; }
+.hero-sub{
+  max-width:480px; color:var(--ink-soft); font-size:16px; line-height:2;
+  opacity:0; animation: riseIn .9s ease forwards .6s;
+}
+.hero-date{
+  margin-top:26px; font-family:var(--font-body); font-weight:600;
+  font-size:15px; color:var(--ink); letter-spacing:.02em;
+  padding:12px 28px; border:1px solid var(--hairline); border-radius:999px;
+  background:var(--paper); opacity:0; animation: riseIn .9s ease forwards .8s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+.hero-date b{ color:var(--gold); font-weight:700; }
+@keyframes riseIn{ from{ opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+.scroll-cue{
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  color:var(--ink-soft); font-size:12px; opacity:0; animation: riseIn 1s ease forwards 1.2s;
+}
+.scroll-cue .stem{ width:1px; height:28px; background:var(--hairline); position:relative; overflow:hidden; }
+.scroll-cue .stem::after{
+  content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+  background:var(--gold); animation: scrollDown 1.8s ease-in-out infinite;
+}
+@keyframes scrollDown{ 0%{top:-100%;} 60%{top:100%;} 100%{top:100%;} }
+
+/* ---- section heading shared ---- */
+.section-head{ text-align:center; margin-bottom:50px; }
+.section-eyebrow{ font-size:12px; letter-spacing:.15em; color:var(--gold); font-weight:600; text-transform:uppercase; }
+.section-title{ font-family:var(--font-display); font-size:clamp(26px,5vw,36px); margin-top:10px; color:var(--ink); }
+.section-desc{ color:var(--ink-soft); font-size:14.5px; margin-top:10px; max-width:420px; margin-inline:auto; line-height:1.8; }
+
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+/* ---- PROGRAM ---- */
+.program{ max-width:560px; margin:0 auto; }
+.prog-item{
+  display:flex; gap:22px; align-items:flex-start; padding:22px 0;
+  border-bottom:1px solid var(--hairline);
+}
+.prog-item:last-child{ border-bottom:none; }
+.prog-time{
+  flex-shrink:0; width:100px; font-weight:700; color:var(--gold);
+  font-size:14.5px; padding-top:2px; text-align:start;
+}
+.prog-icon{ flex-shrink:0; width:34px; height:34px; color:var(--ink); }
+.prog-text h4{ font-family:var(--font-display); font-size:18px; margin-bottom:4px; }
+.prog-text p{ color:var(--ink-soft); font-size:13.5px; line-height:1.7; }
+
+/* ---- LOCATION ---- */
+.loc-card{
+  max-width:600px; margin:0 auto; background:var(--paper);
+  border:1px solid var(--hairline); border-radius:14px; overflow:hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.loc-info{ padding:36px 24px; text-align:center; }
+.loc-info .loc-badge{
+  display: inline-block;
+  background: rgba(176, 141, 63, 0.12);
+  color: var(--gold);
+  font-weight: 700;
+  padding: 8px 22px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  margin: 12px 0 14px;
+}
+.loc-info h4{ font-family:var(--font-display); font-size:22px; margin-bottom:6px; color: var(--ink); }
+.loc-info p{ color:var(--ink-soft); font-size:14px; line-height: 1.8; }
+
+/* ---- RSVP ---- */
+.rsvp-card{
+  max-width:480px; margin:0 auto; background:var(--paper);
+  border:1px solid var(--hairline); border-radius:16px; padding:34px 28px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.04);
+}
+.field{ margin-bottom:18px; text-align:start; }
+.field label{ display:block; font-size:13px; color:var(--ink-soft); margin-bottom:7px; font-weight:500; }
+.field input, .field textarea, .field select{
+  width:100%; border:1px solid var(--hairline); border-radius:8px;
+  padding:11px 14px; font-family:var(--font-body); font-size:14px; color:var(--ink);
+  background:#fff; outline:none; transition:border-color .2s ease;
+}
+.field input:focus, .field textarea:focus, .field select:focus{ border-color:var(--gold); }
+.attend-toggle{ display:flex; gap:10px; }
+.attend-toggle label{
+  flex:1; text-align:center; border:1px solid var(--hairline); border-radius:8px;
+  padding:11px; font-size:13.5px; cursor:pointer; transition:.2s ease; margin:0;
+  color: var(--ink-soft);
+}
+.attend-toggle input{ display:none; }
+.attend-toggle input:checked + span{ color:#fff; font-weight:600; }
+.attend-toggle label:has(input:checked){ background:var(--gold); border-color:var(--gold); color:#fff; }
+.rsvp-submit{
+  width:100%; margin-top:8px; padding: 13px;
+  background: var(--gold); color: #fff; border: none; border-radius: 999px;
+  font-family: var(--font-body); font-size: 15px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(176,141,63,.3); transition: all .25s ease;
+}
+.rsvp-submit:hover{ transform: translateY(-2px); box-shadow: 0 12px 25px rgba(176,141,63,.45); }
+.rsvp-thanks{
+  display:none; text-align:center; padding:20px 0;
+}
+.rsvp-thanks.show{ display:block; }
+.rsvp-thanks svg{ width:44px; height:44px; color:var(--gold); margin-bottom:12px; }
+.rsvp-thanks p{ color:var(--ink-soft); font-size:14px; line-height:1.8; }
+.rsvp-card.submitted .rsvp-form{ display:none; }
+
+/* ---- FOOTER ---- */
+footer{
+  text-align:center; padding:50px 6vw 60px; color:var(--ink-soft);
+}
+footer .foot-names{ font-family:var(--font-display); font-size:24px; color:var(--ink); margin:10px 0; font-weight: 700; }
+footer .heart{ color:var(--rose); font-size: 18px; }
+footer .phone-link{
+  display: inline-block; margin-top: 8px; color: var(--gold);
+  font-weight: 700; font-size: 16px; text-decoration: none; direction: ltr;
+}
+
+@media (max-width:560px){
+  .prog-item{ gap:14px; }
+  .prog-time{ width:76px; font-size:13px; }
+}
+</style>
+<script>
+if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+window.scrollTo(0, 0);
+window.addEventListener('load', () => window.scrollTo(0, 0));
+</script>
+</head>
+<body class="locked">
+
+<div class="butterfly-layer" id="butterflyLayer"></div>
+
+<!-- ================= ENVELOPE INTRO ================= -->
+<div id="envelope-screen">
+  <div class="envelope-wrap" id="envelopeWrap">
+    <div class="env-body"></div>
+    <div class="env-letter">
+      <p>بانگهێشتنامەیەکی<br>تایبەت بۆ ئێوە 🌸</p>
+    </div>
+    <div class="env-flap"></div>
+    <div class="env-seal">
+      <div class="env-seal-half left"></div>
+      <div class="env-seal-half right"></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 21s-8-4.6-8-11.2C4 5.8 6.8 3.5 9.5 4.4 11 4.9 12 6.4 12 6.4s1-1.5 2.5-2C17.2 3.5 20 5.8 20 9.8 20 16.4 12 21 12 21z"/></svg>
+    </div>
+    <div class="env-butterfly">
+      <svg viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg">
+        <path class="wing wing-l" d="M16 12 C10 0 0 2 2 10 C3 16 10 15 16 12" fill="#D3A6A1" opacity="0.9"/>
+        <path class="wing wing-r" d="M16 12 C22 0 32 2 30 10 C29 16 22 15 16 12" fill="#D3A6A1" opacity="0.9"/>
+        <line x1="16" y1="6" x2="16" y2="18" stroke="#2E2A26" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+  <div class="tap-hint">
+    <span>دەست لەسەر نامەکە دابنێ بۆ کردنەوەی</span>
+    <span class="pulse-dot"></span>
+  </div>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main id="mainContent">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">ئاهەنگی هاوسەرگیری</div>
+    <h1 class="hero-names">ڕێدیار<span class="amp">و</span>....</h1>
+    <p class="hero-sub">بە دڵ و گیانمان بانگهێشتتان دەکەین بۆ بەشداریکردنمان لە جوانترین ساتی ژیانمان، کاتێک کە یەک دەبین بۆ هەتاهەتایە.</p>
+    <div class="hero-date">٦ی تشرینی دووەم (١١) ٢٠٢٦ &nbsp;•&nbsp; هەینی کاتژمێر <b>٧:٠٠ی ئێوارە</b></div>
+    <div class="scroll-cue"><span>سووڵبدەرەوە</span><div class="stem"></div></div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section id="program">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">پرۆگرام</div>
+      <h2 class="section-title">بەرنامەی ڕۆژ</h2>
+      <p class="section-desc">کاتەکان بە خۆشەویستی دیاریکراون تا هەموو ساتەکان پێکەوە بین.</p>
+    </div>
+    <div class="program reveal">
+      <div class="prog-item">
+        <div class="prog-time">٧:٠٠ ئێوارە</div>
+        <svg class="prog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg>
+        <div class="prog-text"><h4>پێشوازی لە میوانان</h4><p>بەخێرهاتنی کەسوکار و میوانە بەڕێزەکان لە دەروازەی هۆڵ.</p></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-time">٨:٠٠ شەو</div>
+        <svg class="prog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-8-4.6-8-11.2C4 5.8 6.8 3.5 9.5 4.4 11 4.9 12 6.4 12 6.4s1-1.5 2.5-2C17.2 3.5 20 5.8 20 9.8 20 16.4 12 21 12 21z"/></svg>
+        <div class="prog-text"><h4>هاتنی بووک و زاوا</h4><p>ساتەوەختی چوونەژوورەوە و یادگارییە شیرینەکان.</p></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-time">٩:٠٠ شەو</div>
+        <svg class="prog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 20h16M6 20V10M18 20V10M6 10l6-6 6 6"/></svg>
+        <div class="prog-text"><h4>نانخواردن و شیرینی</h4><p>خواردن و کاتێکی خۆش لەگەڵ خۆشەویستترین کەسانمان.</p></div>
+      </div>
+      <div class="prog-item">
+        <div class="prog-time">١٠:٠٠ شەو</div>
+        <svg class="prog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 21c2-1 4-1 6 0s4 1 6 0 4-1 4-1M6 17l3-9 3 9M12 17V8M16 12h2"/></svg>
+        <div class="prog-text"><h4>شایی و هەڵپەڕکێ</h4><p>شادی و گۆرانی و وێنەگرتنی هەموو خۆشیمان پێکەوە.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2c0 6-4 8-4 12a4 4 0 108 0c0-4-4-6-4-12z"/></svg><div class="line"></div></div>
+
+  <!-- LOCATION -->
+  <section id="location">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">شوێنی ئاهەنگ</div>
+      <h2 class="section-title">شوێن و هۆڵ</h2>
+    </div>
+    <div class="loc-card reveal">
+      <div class="loc-info">
+        <div style="font-size:2.5rem; margin-bottom:8px;">📍</div>
+        <div class="loc-badge">بەم زووانە دیاری دەکرێت ✨</div>
+        <p>ناونیشان و نەخشەی تەواوی هۆڵەکە لە نزیکبوونەوەی کاتی ئاهەنگ لێرە دادەنرێت و ئاگادارتان دەکەینەوە.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="line"></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2c0 6-4 8-4 12a4 4 0 108 0c0-4-4-6-4-12z"/></svg><div class="line"></div></div>
+
+  <!-- RSVP -->
+  <section id="rsvp">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">ئامادەبوون</div>
+      <h2 class="section-title">ئامادەبوونتان پشتڕاست بکەنەوە</h2>
+      <p class="section-desc">سوپاسگوزار دەبین گەر پێشوەختە وەڵاممان بدەنەوە تا پێشوازییەکی شایستە بکەین.</p>
+    </div>
+    <div class="rsvp-card reveal" id="rsvpCard">
+      <form class="rsvp-form" id="rsvpForm">
+        <div class="field">
+          <label>ناوی تەواو</label>
+          <input type="text" id="rName" required placeholder="ناوت لێرە بنووسە...">
+        </div>
+        <div class="field">
+          <label>ژمارەی بەشداربووان</label>
+          <select id="rCount" class="field">
+            <option value="١ کەس">تەنها خۆم (١ کەس)</option>
+            <option value="٢ کەس">٢ کەس</option>
+            <option value="٣ کەس">٣ کەس</option>
+            <option value="٤ کەس یان زیاتر">٤ کەس یان زیاتر</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ئایا ئامادە دەبیت؟</label>
+          <div class="attend-toggle">
+            <label><input type="radio" name="attend" value="بەڵێ، بەخۆشحاڵییەوە دێم 🎉" checked><span>بەڵێ، دێم 🎉</span></label>
+            <label><input type="radio" name="attend" value="ببورن، ناتوانم بێم 🕊️"><span>ببورن، ناتوانم</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>پەیامی پیرۆزبایی (ئارەزوومەندانە)</label>
+          <textarea id="rMsg" rows="3" placeholder="پەیامەکەت لێرە بنووسە..."></textarea>
+        </div>
+        <button type="submit" class="rsvp-submit">ناردنی وەڵام بە واتسئاپ 💬</button>
+      </form>
+      <div class="rsvp-thanks" id="rsvpThanks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 6L9 17l-5-5"/></svg>
+        <p>سوپاس بۆ وەڵامەکەتان 💛<br>چاوەڕێتانین بە دڵێکی گەرم!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="divider" style="margin-bottom:26px;"><div class="line"></div><span class="heart">♥</span><div class="line"></div></div>
+    <p>بە خۆشی و شادی بنەماڵەی</p>
+    <div class="foot-names">ڕێدیار  &amp;  ....</div>
+    <p style="margin-top: 12px;">
+      <a href="tel:07713443232" class="phone-link">📞 07713443232</a>
+    </p>
+  </footer>
+
+</main>
+
+<script>
+// ---------- envelope open interaction ----------
+const envScreen = document.getElementById('envelope-screen');
+const envWrap   = document.getElementById('envelopeWrap');
+const mainEl    = document.getElementById('mainContent');
+
+envWrap.addEventListener('click', () => {
+  if (envWrap.classList.contains('opened')) return;
+  envWrap.classList.add('opened');
+  setTimeout(() => {
+    envScreen.classList.add('launching');
+    document.body.classList.remove('locked');
+    mainEl.classList.add('revealed');
+  }, 1300);
+  setTimeout(() => {
+    envScreen.classList.add('hidden');
+    spawnButterflies();
+  }, 2150);
+}, { once: true });
+
+// ---------- scroll reveal ----------
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// ---------- ambient butterflies ----------
+function spawnButterflies(){
+  const layer = document.getElementById('butterflyLayer');
+  const colors = ['#D3A6A1', '#B08D3F', '#C9B98C', '#C99A93'];
+  const paths  = ['driftA', 'driftB', 'driftC'];
+
+  for (let i = 0; i < 5; i++){
+    const b = document.createElement('div');
+    const isFar = Math.random() < 0.4;
+    b.className = 'bfly' + (isFar ? ' far' : '');
+
+    const size = isFar ? (14 + Math.random()*4) : (20 + Math.random()*8);
+    const top  = 8 + Math.random() * 72;
+    const left = 4 + Math.random() * 88;
+    const path = paths[i % paths.length];
+    const duration = (isFar ? 16 : 11) + Math.random() * 7;
+    const wingDur  = 0.28 + Math.random() * 0.12;
+    const flyInDelay = i * 0.5;
+
+    b.style.width  = size + 'px';
+    b.style.height = (size * 0.72) + 'px';
+    b.style.top  = top + 'vh';
+    b.style.left = left + 'vw';
+    b.style.setProperty('--bfly-op', isFar ? '0.5' : '0.85');
+    b.style.animation = `flyIn 1.2s ease forwards ${flyInDelay}s, ${path} ${duration}s ease-in-out infinite ${flyInDelay}s`;
+
+    const c = colors[i % colors.length];
+    b.innerHTML = `<svg viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+      <path class="wing wing-l" style="animation-duration:${wingDur}s" d="M16 12 C10 0 0 2 2 10 C3 16 10 15 16 12" fill="${c}"/>
+      <path class="wing wing-r" style="animation-duration:${wingDur}s" d="M16 12 C22 0 32 2 30 10 C29 16 22 15 16 12" fill="${c}"/>
+      <line x1="16" y1="6" x2="16" y2="18" stroke="#2E2A26" stroke-width="1"/>
+    </svg>`;
+    layer.appendChild(b);
+  }
+}
+
+// ---------- RSVP submit to WhatsApp: 07713443232 ----------
+document.getElementById('rsvpForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('rName').value.trim();
+  const count = document.getElementById('rCount').value;
+  const attend = document.querySelector('input[name="attend"]:checked').value;
+  const msg = document.getElementById('rMsg').value.trim();
+
+  const targetWhatsAppNumber = '9647713443232';
+  let waText = `سڵاو و ڕێز 🌸%0Aبانگهێشتنامەی هاوسەرگیری (ڕێدیار & ....)%0A%0A`;
+  waText += `👤 ناوی میوان: *${encodeURIComponent(name)}*%0A`;
+  waText += `💌 بڕیاری هاتن: *${encodeURIComponent(attend)}*%0A`;
+  waText += `👥 ژمارەی کەسەکان: *${encodeURIComponent(count)}*`;
+  if (msg) {
+    waText += `%0A✍️ پەیام: ${encodeURIComponent(msg)}`;
+  }
+
+  window.open(`https://wa.me/${targetWhatsAppNumber}?text=${waText}`, '_blank');
+
+  document.getElementById('rsvpCard').classList.add('submitted');
+  document.getElementById('rsvpThanks').classList.add('show');
+});
+</script>
+</body>
+</html>
