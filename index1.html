@@ -304,8 +304,8 @@ section{ padding: 80px 6vw; position:relative; }
 
 /* ---- CONTACTS ---- */
 .contacts-card{
-  max-width:540px; margin:0 auto 40px; background:var(--paper);
-  border:1px solid var(--hairline); border-radius:16px; padding:28px 24px;
+  max-width:540px; margin:0 auto; background:var(--paper);
+  border:1px solid var(--hairline); border-radius:16px; padding:32px 24px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.03); text-align: center;
 }
 .contacts-grid{
@@ -500,46 +500,6 @@ window.addEventListener('load', () => window.scrollTo(0, 0));
         </div>
       </div>
     </div>
-
-    <!-- RSVP -->
-    <div class="rsvp-card reveal" id="rsvpCard">
-      <div style="text-align:center; margin-bottom:20px;">
-        <h3 style="font-family:var(--font-display); font-size:20px; color:var(--ink); margin-bottom:6px;">ئامادەبوونتان پشتڕاست بکەنەوە</h3>
-        <p style="color:var(--ink-soft); font-size:13.5px;">سوپاسگوزار دەبین گەر پێشوەختە وەڵاممان بدەنەوە تا پێشوازییەکی شایستە بکەین.</p>
-      </div>
-
-      <form class="rsvp-form" id="rsvpForm">
-        <div class="field">
-          <label>ناوی تەواو</label>
-          <input type="text" id="rName" required placeholder="ناوت لێرە بنووسە...">
-        </div>
-        <div class="field">
-          <label>ژمارەی بەشداربووان</label>
-          <select id="rCount" class="field">
-            <option value="١ کەس">تەنها خۆم (١ کەس)</option>
-            <option value="٢ کەس">٢ کەس</option>
-            <option value="٣ کەس">٣ کەس</option>
-            <option value="٤ کەس یان زیاتر">٤ کەس یان زیاتر</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>ئایا ئامادە دەبیت؟</label>
-          <div class="attend-toggle">
-            <label><input type="radio" name="attend" value="بەڵێ، بەخۆشحاڵییەوە دێم 🎉" checked><span>بەڵێ، دێم 🎉</span></label>
-            <label><input type="radio" name="attend" value="ببورن، ناتوانم بێم 🕊️"><span>ببورن، ناتوانم</span></label>
-          </div>
-        </div>
-        <div class="field">
-          <label>پەیامی پیرۆزبایی (ئارەزوومەندانە)</label>
-          <textarea id="rMsg" rows="3" placeholder="پەیامەکەت لێرە بنووسە..."></textarea>
-        </div>
-        <button type="submit" class="rsvp-submit">ناردنی وەڵام بە واتسئاپ 💬</button>
-      </form>
-      <div class="rsvp-thanks" id="rsvpThanks">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 6L9 17l-5-5"/></svg>
-        <p>سوپاس بۆ وەڵامەکەتان 💛<br>چاوەڕێتانین بە دڵێکی گەرم!</p>
-      </div>
-    </div>
   </section>
 
   <footer>
@@ -613,29 +573,6 @@ function spawnButterflies(){
     layer.appendChild(b);
   }
 }
-
-// ---------- RSVP submit to WhatsApp ----------
-document.getElementById('rsvpForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const name = document.getElementById('rName').value.trim();
-  const count = document.getElementById('rCount').value;
-  const attend = document.querySelector('input[name="attend"]:checked').value;
-  const msg = document.getElementById('rMsg').value.trim();
-
-  const targetWhatsAppNumber = '9647501788420';
-  let waText = `سڵاو و ڕێز 🌸%0Aئاهەنگی گواستنەوەی (ڕێدیار & لاوێن)%0A%0A`;
-  waText += `👤 ناوی میوان: *${encodeURIComponent(name)}*%0A`;
-  waText += `💌 بڕیاری هاتن: *${encodeURIComponent(attend)}*%0A`;
-  waText += `👥 ژمارەی کەسەکان: *${encodeURIComponent(count)}*`;
-  if (msg) {
-    waText += `%0A✍️ پەیام: ${encodeURIComponent(msg)}`;
-  }
-
-  window.open(`https://wa.me/${targetWhatsAppNumber}?text=${waText}`, '_blank');
-
-  document.getElementById('rsvpCard').classList.add('submitted');
-  document.getElementById('rsvpThanks').classList.add('show');
-});
 </script>
 </body>
 </html>
